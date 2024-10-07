@@ -7,7 +7,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensure full height coverage */
+  overflow: hidden; /* Prevent overflow */
 }
 
 /* Container for the form */
@@ -17,8 +18,8 @@ body {
   border-radius: 10px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   border: 2px solid #007bff;
-  max-width: 400px;
-  width: 100%;
+  max-width: 600px; /* Maximum width for larger screens */
+  width: 100%; /* Full width on smaller screens */
 }
 
 /* Form heading */
@@ -63,6 +64,11 @@ button:hover {
   color: #333;
 }
 
+.results-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .results ul {
   list-style-type: none;
   padding: 0;
@@ -74,6 +80,25 @@ button:hover {
   margin-bottom: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+/* Responsive styles for desktop */
+@media (min-width: 768px) {
+  .results-container {
+    flex-direction: row; /* Align items in a row */
+    justify-content: space-between; /* Space between items */
+    align-items: flex-start; /* Align items at the start */
+  }
+
+  #resultList {
+    flex: 1; /* Take up available space */
+    margin-right: 10px; /* Space between list and button */
+  }
+
+  #copyButton {
+    width: auto; /* Make button width auto */
+    align-self: center; /* Center button vertically */
+  }
 }
 
 /* Copy Button */
@@ -91,3 +116,10 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* Full height for form container */
+.form-container {
+  height: calc(100vh - 40px); /* Full height minus some padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+}
