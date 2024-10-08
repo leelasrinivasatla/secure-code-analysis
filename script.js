@@ -1,72 +1,79 @@
-function generateEmails() {
-  // Get values from the form fields
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  const domain = document.getElementById('domain').value.trim();
-  const year = document.getElementById('year').value.trim();
-  const month = document.getElementById('month').value.trim();
-  const day = document.getElementById('day').value.trim();
-  
-  const resultList = document.getElementById('resultList');
-  resultList.innerHTML = ''; // Clear previous results
+document.getElementById('emailForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  // Create base combinations
-  let combinations = [
-    `${firstName}.${lastName}@${domain}`,
-    `${firstName}${lastName}@${domain}`,
-    `${firstName}_${lastName}@${domain}`,
-    `${lastName}${firstName}@${domain}`,
-    `${firstName[0]}${lastName}@${domain}`,
-    `${firstName[0]}.${lastName}@${domain}`,
-    `${firstName}${lastName[0]}@${domain}`,
-    `${firstName}.${lastName[0]}@${domain}`,
-    `${firstName}-${lastName}@${domain}`,
-    `${firstName[0]}_${lastName}@${domain}`,
-    `${lastName}.${firstName}@${domain}`,
-    `${lastName}_${firstName}@${domain}`
-  ];
+    // Get input values
+    const firstName = document.getElementById('firstName').value.trim().replace(/\s+/g, '').toLowerCase();
+    const lastName = document.getElementById('lastName').value.trim().replace(/\s+/g, '').toLowerCase();
+    const birthYear = document.getElementById('birthYear').value;
+    const birthDay = document.getElementById('birthDay').value;
+    const birthMonth = document.getElementById('birthMonth').value;
+    const domain = document.getElementById('domain').value.trim().toLowerCase();
 
-  // Add combinations with year
-  if (year) {
-    combinations.push(`${firstName}.${lastName}${year}@${domain}`);
-    combinations.push(`${firstName}${lastName}${year}@${domain}`);
-    combinations.push(`${firstName}_${lastName}${year}@${domain}`);
-    combinations.push(`${firstName}${year}@${domain}`);
-    combinations.push(`${lastName}${year}@${domain}`);
-    combinations.push(`${firstName[0]}${lastName}${year}@${domain}`);
-    combinations.push(`${firstName}.${lastName}_${year}@${domain}`);
-  }
+    // Generate email combinations
+    const emailCombinations = generateEmailCombinations(firstName, lastName, birthYear, birthDay, birthMonth, domain);
 
-  // Add combinations with month and day
-  if (month && day) {
-    combinations.push(`${firstName}${month}${day}@${domain}`);
-    combinations.push(`${firstName}${lastName}${month}${day}@${domain}`);
-    combinations.push(`${firstName}.${lastName}${month}${day}@${domain}`);
-    combinations.push(`${firstName}_${lastName}${month}${day}@${domain}`);
-  }
+    // Display results
+    const resultDiv = document.getElementById('result');
+    const emailList = document.getElementById('emailList');
 
-  // Display combinations in the list
-  combinations.forEach(email => {
-    const li = document.createElement('li');
-    li.textContent = email;
-    resultList.appendChild(li);
-  });
+    emailList.innerHTML = '';  // Clear previous results
+
+    emailCombinations.forEach(email => {
+        const li = document.createElement('li');
+        li.textContent = email;
+        emailList.appendChild(li);
+    });
+
+    resultDiv.classList.remove('hidden');  // Show the result section
+});
+
+function generateEmailCombinations(firstName, lastName, birthYear, day, month, domain) {
+    let combinations = [];
+    
+    // Basic combinations
+    combinations.push(`${firstName}.${lastName}@${domain}`);
+    combinations.push(`${firstName}${lastName}@${domain}`);
+    combinations.push(`${firstName[0]}.${lastName}@${domain}`);
+    combinations.push(`${firstName[0]}${lastName}@${domain}`);
+    combinations.push(`${firstName}_${lastName}@${domain}`);
+    combinations.push(`${firstName}-${lastName}@${domain}`);
+
+    // Initial-based combinations
+    combinations.push(`${firstName[0]}${lastName[0]}@${domain}`); // e.g. aj@gmail.com
+    combinations.push(`${firstName[0]}_${lastName[0]}@${domain}`);
+    combinations.push(`${firstName[0]}-${lastName[0]}@${domain}`);
+
+    // Reverse combinations
+    combinations.push(`${lastName}.${firstName}@${domain}`);
+    combinations.push(`${lastName}${firstName}@${domain}`);
+    
+    // Birth year and date combinations
+    if (birthYear) {
+        combinations.push(`${firstName}.${lastName}${birthYear}@${domain}`);
+        combinations.push(`${firstName}${birthYear}@${domain}`);
+        combinations.push(`${firstName}.${lastName}${birthYear.substring(2)}@${domain}`);
+        combinations.push(`${firstName}${birthYear.substring(2)}@${domain}`);
+    }
+
+    if (day && month) {
+        combinations.push(`${firstName}.${lastName}${day}${month}@${domain}`);
+        combinations.push(`${firstName}${lastName}${day}${month}@${domain}`);
+    }
+
+    return combinations;
 }
 
-// Function to copy all email combinations to the clipboard
-function copyEmails() {
-  const resultList = document.getElementById('resultList');
-  let emailText = '';
-  resultList.querySelectorAll('li').forEach(item => {
-    emailText += item.textContent + '\n';
-  });
+// Copy to clipboard functionality
+document.getElementById('copyButton').addEventListener('click', function() {
+    const emails = document.getElementById('emailList').innerText;
 
-  const tempTextArea = document.createElement('textarea');
-  tempTextArea.value = emailText;
-  document.body.appendChild(tempTextArea);
-  tempTextArea.select();
-  document.execCommand('copy');
-  document.body.removeChild(tempTextArea);
-  alert('All email combinations copied to clipboard!');
-}
-
+    navigator.clipboard.writeText(emails).then(function() {
+        const copyAlert = document.getElementById('copyAlert');
+        copyAlert.style.display = 'block';
+        setTimeout(() => {
+            copyAlert.style.display = 'none';
+        }, 2000);
+    }).catch(function(error) {
+        console.error('Failed to copy text: ', error);
+    });
+});
