@@ -1,125 +1,62 @@
-/* General body styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Ensure full height coverage */
-  overflow: hidden; /* Prevent overflow */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Container for the form */
-.form-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid #007bff;
-  max-width: 600px; /* Maximum width for larger screens */
-  width: 100%; /* Full width on smaller screens */
+.container {
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
 }
 
-/* Form heading */
-h2 {
-  text-align: center;
-  color: #007bff;
-  font-size: 24px;
-  margin-bottom: 20px;
+h1 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
-/* Styling input fields */
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  box-sizing: border-box;
+form {
+    margin-bottom: 20px;
 }
 
-/* Styling button */
+input[type="file"] {
+    display: block;
+    margin: 0 auto 15px;
+}
+
 button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
-/* Email combination results styling */
-.results {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #333;
+#results {
+    margin-top: 20px;
 }
 
-.results-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.results ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.results ul li {
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin-bottom: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-/* Responsive styles for desktop */
-@media (min-width: 768px) {
-  .results-container {
-    flex-direction: row; /* Align items in a row */
-    justify-content: space-between; /* Space between items */
-    align-items: flex-start; /* Align items at the start */
-  }
-
-  #resultList {
-    flex: 1; /* Take up available space */
-    margin-right: 10px; /* Space between list and button */
-  }
-
-  #copyButton {
-    width: auto; /* Make button width auto */
-    align-self: center; /* Center button vertically */
-  }
-}
-
-/* Copy Button */
-#copyButton {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#copyButton:hover {
-  background-color: #0056b3;
-}
-
-/* Full height for form container */
-.form-container {
-  height: calc(100vh - 40px); /* Full height minus some padding */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
+#output {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left;
 }
