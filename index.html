@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leela's Email Combination Generator</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Code Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
-  <div class="form-container">
-    <h2>Email Combination Generator</h2>
-    <form id="emailForm">
-      <input type="text" id="firstName" placeholder="First Name" required>
-      <input type="text" id="lastName" placeholder="Last Name" required>
-      <input type="text" id="domain" placeholder="Domain (e.g., gmail.com)" required>
-      <input type="number" id="year" placeholder="Year of Birth (optional)">
-      <input type="number" id="month" placeholder="Month of Birth (optional)">
-      <input type="number" id="day" placeholder="Day of Birth (optional)">
-      <button type="button" onclick="generateEmails()">Generate Email Combinations</button>
-    </form>
-
-    <div class="results" id="emailResults">
-      <h3>Email Combinations:</h3>
-      <ul id="resultList"></ul>
-      <button id="copyButton" onclick="copyEmails()">Copy All Emails</button>
+    <div class="container">
+        <h1>Secure Code Analyzer</h1>
+        <form id="uploadForm">
+            <input type="file" name="files[]" multiple required>
+            <button type="submit">Analyze Code</button>
+        </form>
+        <div id="results">
+            <h2>Analysis Results</h2>
+            <div id="output"></div>
+        </div>
     </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
